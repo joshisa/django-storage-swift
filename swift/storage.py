@@ -115,12 +115,21 @@ class SwiftStorage(Storage):
 
     def get_token(self):
         if time() - self._token_creation_time >= self.auth_token_duration:
+            os_options = {
+                'tenant_id': self.tenant_id,
+                'tenant_name': self.tenant_name,
+                'user_domain_id': self.user_domain_id,
+                'user_domain_name': self.user_domain_name,
+                'project_domain_id': self.project_domain_id,
+                'project_domain_name': self.project_domain_name
+            }
+            os_options.update(self.os_extra_options)
             new_token = swiftclient.get_auth(
                 self.api_auth_url,
                 self.api_username,
                 self.api_key,
                 auth_version=self.auth_version,
-                os_options={"tenant_name": self.tenant_name},
+                os_options=os_options,
             )[1]
             self.token = new_token
         return self._token
