@@ -241,7 +241,8 @@ class SwiftStorage(Storage):
         return url
 
     def path(self, name):
-        raise NotImplementedError
+        return self._path(name)
+        # raise NotImplementedError
 
     def isdir(self, name):
         return '.' not in name
