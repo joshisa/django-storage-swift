@@ -1,4 +1,4 @@
-from six.moves import StringIO
+from six.moves import BytesIO
 import re
 import mimetypes
 import os
@@ -147,7 +147,7 @@ class SwiftStorage(Storage):
         headers, content = swiftclient.get_object(self.storage_url, self.token,
                                                   self.container_name, name,
                                                   http_conn=self.http_conn)
-        buf = StringIO(content)
+        buf = BytesIO(content)
         buf.name = os.path.basename(name)
         buf.mode = mode
         return File(buf)
