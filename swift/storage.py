@@ -1,4 +1,4 @@
-from six.moves import BytesIO
+from io import BytesIO
 import re
 import mimetypes
 import os
