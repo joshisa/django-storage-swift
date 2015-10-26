@@ -2,6 +2,7 @@ from io import BytesIO
 import re
 import mimetypes
 import os
+import inspect
 from six.moves.urllib import parse as urlparse
 import hmac
 from hashlib import sha1
@@ -154,11 +155,16 @@ class SwiftStorage(Storage):
         return File(buf)
 
     def _save(self, name, content):
-        print("Storage::Save Method called ... [name]" + name)
+        print("Inspection Swift Storage Save:: %s" % inspect.getmembers(content))
         if self.name_prefix:
             name = self.name_prefix + name
 
         content_type = mimetypes.guess_type(name)[0]
+        print(self.storage_url)
+        print(self.token)
+        print(self.container_name)
+        print(name)
+        print(content_type)
         swiftclient.put_object(self.storage_url,
                                self.token,
                                self.container_name,
