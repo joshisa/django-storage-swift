@@ -194,7 +194,7 @@ class SwiftStorage(Storage):
                 self.last_headers_name = name
             return self.last_headers_value
         except swiftclient.ClientException:
-            return self.last_headers_value
+            pass
 
     def exists(self, name):
         try:
