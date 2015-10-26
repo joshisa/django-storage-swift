@@ -141,6 +141,7 @@ class SwiftStorage(Storage):
     token = property(get_token, set_token)
 
     def _open(self, name, mode='rb'):
+        print("Storage::Open Method called ... [name]" + name) 
         if self.name_prefix:
             name = self.name_prefix + name
 
@@ -153,6 +154,7 @@ class SwiftStorage(Storage):
         return File(buf)
 
     def _save(self, name, content):
+        print("Storage::Save Method called ... [name]" + name)
         if self.name_prefix:
             name = self.name_prefix + name
 
