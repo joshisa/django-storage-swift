@@ -194,7 +194,7 @@ class SwiftStorage(Storage):
                 self.last_headers_name = name
             return self.last_headers_value
         except swiftclient.ClientException:
-            return "GetHeader Error"
+            return {"X-Timestamp": 1389453423.35964}
 
     def exists(self, name):
         try:
