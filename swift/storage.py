@@ -2,6 +2,7 @@ from io import BytesIO
 import re
 import mimetypes
 import os
+import sys
 import inspect
 from six.moves.urllib import parse as urlparse
 import hmac
@@ -152,11 +153,12 @@ class SwiftStorage(Storage):
         headers, content = swiftclient.get_object(self.storage_url, self.token,
                                                   self.container_name, name,
                                                   http_conn=self.http_conn)
-        print("Inspection Swift Storage Open:: %s" % inspect.getmembers(headers))
-        print("Inspection Swift Storage Open:: %s" % inspect.getmembers(content))
         buf = BytesIO(content)
+        print("::_OPEN %s" % sys.getsizeof(buf))
         buf.name = os.path.basename(name)
+        print(buf.name)
         buf.mode = mode
+        print("::END_OPEN")
         return File(buf)
 
     def _save(self, name, content):
