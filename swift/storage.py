@@ -182,19 +182,16 @@ class SwiftStorage(Storage):
         According to my test, we get a *2 speed up. Which makes sense : two
         api calls were made..
         """
-        try: 
-            if self.name_prefix:
-                name = self.name_prefix + name
+        if self.name_prefix:
+            name = self.name_prefix + name
 
-            if name != self.last_headers_name:
-                # miss -> update
-                self.last_headers_value = swiftclient.head_object(
-                    self.storage_url, self.token, self.container_name, name,
-                    http_conn=self.http_conn)
-                self.last_headers_name = name
-            return self.last_headers_value
-        except swiftclient.ClientException:
-            pass
+        if name != self.last_headers_name:
+            # miss -> update
+            self.last_headers_value = swiftclient.head_object(
+                self.storage_url, self.token, self.container_name, name,
+                http_conn=self.http_conn)
+            self.last_headers_name = name
+        return self.last_headers_value
 
     def exists(self, name):
         try:
