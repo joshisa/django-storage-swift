@@ -142,13 +142,18 @@ class SwiftStorage(Storage):
     token = property(get_token, set_token)
 
     def _open(self, name, mode='rb'):
-        print("Storage::Open Method called ... [name]" + name) 
         if self.name_prefix:
             name = self.name_prefix + name
-
+        print("_OPEN METHOD")
+        print(self.storage_url)
+        print(self.token)
+        print(self.container_name)
+        print(name)
         headers, content = swiftclient.get_object(self.storage_url, self.token,
                                                   self.container_name, name,
                                                   http_conn=self.http_conn)
+        print("Inspection Swift Storage Open:: %s" % inspect.getmembers(headers))
+        print("Inspection Swift Storage Open:: %s" % inspect.getmembers(content))
         buf = BytesIO(content)
         buf.name = os.path.basename(name)
         buf.mode = mode
