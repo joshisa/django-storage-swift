@@ -11,7 +11,7 @@ from time import time
 from datetime import datetime
 from six import b
 
-from django.core.files import File
+from django.core.files.base import ContentFile
 from django.core.files.storage import Storage
 from django.core.exceptions import ImproperlyConfigured
 from django.conf import settings
@@ -153,13 +153,13 @@ class SwiftStorage(Storage):
         headers, content = swiftclient.get_object(self.storage_url, self.token,
                                                   self.container_name, name,
                                                   http_conn=self.http_conn)
-        buf = BytesIO(content)
-        print("::_OPEN %s" % sys.getsizeof(buf))
-        buf.name = os.path.basename(name)
-        print(buf.name)
-        buf.mode = mode
-        print("::END_OPEN")
-        return File(buf)
+        # buf = BytesIO(content)
+        # print("::_OPEN %s" % sys.getsizeof(buf))
+        # buf.name = os.path.basename(name)
+        # print(buf.name)
+        # buf.mode = mode
+        # print("::END_OPEN")
+        return ContentFile(content)
 
     def _save(self, name, content):
         print("Inspection Swift Storage Save:: %s" % inspect.getmembers(content))
